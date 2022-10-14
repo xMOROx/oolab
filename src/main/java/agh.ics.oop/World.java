@@ -2,63 +2,42 @@ package agh.ics.oop;
 
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 
 
 public class World {
-    public static void run(Direction[] arguments) {
-        for (Direction argument : arguments) {
 
-            String message = switch (argument) {
-                case FORWARD -> "Zwierzak idzie do przodu";
-                case BACKWARD -> "Zwierzak idzie do tyłu";
-                case RIGHT -> "Zwierzak skręca w prawo";
-                case LEFT -> "Zwierzak skręca w lewo";
-                default -> "";
-            };
-            if (message.length() != 0) {
-                System.out.println(message);
-            }
-
-        }
+    private static Direction StringToDirection(String input) {
+        return switch (input) {
+            case "f" -> Direction.FORWARD;
+            case "b" -> Direction.BACKWARD;
+            case "r" -> Direction.RIGHT;
+            case "l" -> Direction.LEFT;
+            default -> Direction.DEFAULT;
+        };
     }
-
-    private static Direction[] copyArray(Direction[] moves) {
-//        if (moves.length == 0 ) {
-//            return Arrays.copyOf(moves, 2);
-//        }
-        return Arrays.copyOf(moves, moves.length +1);
+    private  static String output(Direction input) {
+        return  switch (input) {
+            case FORWARD -> "Zwierzak idzie do przodu";
+            case BACKWARD -> "Zwierzak idzie do tylu";
+            case RIGHT -> "Zwierzak skreca w prawo";
+            case LEFT -> "Zwierzak skreca w lewo";
+            default -> "";
+        };
     }
-
-    private static Direction[] StringToEnum(String[] args) {
-
-        Direction[] Moves = {};
-        int size = -1;
-
-        for (String argument: args) {
-            size++;
-
-            if(Moves.length <= size) {
-                Moves = copyArray(Moves);
-            }
-
-            Direction direction = switch(argument) {
-                case "f" -> Direction.FORWARD;
-                case "b" -> Direction.BACKWARD;
-                case "r" -> Direction.RIGHT;
-                case "l" -> Direction.LEFT;
-                default -> Direction.DEFAULT;
-            };
-            Moves[size] = direction;
-        }
-
-        return Moves;
-    }
-
     public static void main(String[] args ) {
-
-        Direction[] Moves = StringToEnum(args);
         System.out.println("Start");
-        run(Moves);
+
+        List<String> Moves = Arrays.asList(args);
+
+        Moves
+                .stream()
+                .map(World::StringToDirection)
+                .map(World::output)
+                .filter(e -> !e.equals(""))
+                .forEach(System.out::println);
+
         System.out.println("Stop");
     }
 }
