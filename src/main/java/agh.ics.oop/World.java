@@ -27,17 +27,33 @@ public class World {
         };
     }
     public static void main(String[] args ) {
-        System.out.println("Start");
+//        System.out.println("Start");
+//
+//        List<String> Moves = Arrays.asList(args);
+//
+//        Moves
+//                .stream()
+//                .map(World::StringToDirection)
+//                .map(World::output)
+//                .filter(e -> !e.equals(""))
+//                .forEach(System.out::println);
+//
+//        System.out.println("Stop");
+//        Vector2D position1 = new Vector2D(1,2);
+//        System.out.println(position1);
+//        Vector2D position2 = new Vector2D(-2, 1);
+//        System.out.println(position2);
+//        System.out.println(position1.add(position2));
 
-        List<String> Moves = Arrays.asList(args);
+        MapDirection direction1 = MapDirection.NORTH;
+        MapDirection direction2 = MapDirection.NORTH;
 
-        Moves
-                .stream()
-                .map(World::StringToDirection)
-                .map(World::output)
-                .filter(e -> !e.equals(""))
-                .forEach(System.out::println);
+        System.out.println(direction1.toString());
+        System.out.println(direction1.next());
+        System.out.println(direction1.previous());
+        System.out.println(direction1.toUnitVector());
+        System.out.println(direction1.equals(direction2));
 
-        System.out.println("Stop");
+
     }
 }
