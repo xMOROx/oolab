@@ -7,14 +7,6 @@ import java.util.Random;
 
 
 public class Vector2DTest {
-    private int[] randomize(int min, int max) {
-        if (min > max) {
-            return null;
-        }
-        Random rand = new Random();
-        int range = max - min + 1;
-        return new int[]{rand.nextInt(range) + min, rand.nextInt(range) + 1};
-    }
 
     @Test
     void equals() {

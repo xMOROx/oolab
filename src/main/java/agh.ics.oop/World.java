@@ -45,15 +45,38 @@ public class World {
 //        System.out.println(position2);
 //        System.out.println(position1.add(position2));
 
-        MapDirection direction1 = MapDirection.NORTH;
-        MapDirection direction2 = MapDirection.NORTH;
+//        MapDirection direction1 = MapDirection.NORTH;
+//        MapDirection direction2 = MapDirection.NORTH;
+//
+//        System.out.println(direction1.toString());
+//        System.out.println(direction1.next());
+//        System.out.println(direction1.previous());
+//        System.out.println(direction1.toUnitVector());
+//        System.out.println(direction1.equals(direction2));
 
-        System.out.println(direction1.toString());
-        System.out.println(direction1.next());
-        System.out.println(direction1.previous());
-        System.out.println(direction1.toUnitVector());
-        System.out.println(direction1.equals(direction2));
 
+        OptionsParser parser = new OptionsParser();
 
+        Animal cat = new Animal();
+        cat.move(MoveDirection.RIGHT);
+        cat.move(MoveDirection.FORWARD);
+        cat.move(MoveDirection.FORWARD);
+
+        cat.move(MoveDirection.BACKWARD);
+        cat.move(MoveDirection.BACKWARD);
+        cat.move(MoveDirection.FORWARD);
+        cat.move(MoveDirection.FORWARD);
+        cat.move(MoveDirection.LEFT);
+        cat.move(MoveDirection.FORWARD);
+        cat.move(MoveDirection.BACKWARD);
+
+        System.out.println(cat.toString());
+
+        Animal dog = new Animal();
+
+        for (MoveDirection movement:parser.parse(args)) {
+            dog.move(movement);
+        }
+        System.out.println(dog);
     }
 }
