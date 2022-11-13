@@ -5,29 +5,41 @@ public class Animal {
     private MapDirection orientation;
     private Vector2D location;
 
-    public Animal() {
+    private final IWorldMap map;
+// Konstruktor nie ma sensu już z uwagi na fakt, że definiujemy typ mapy na jakiej będą nasze zwierzątka.
+//    public Animal() {
+//        this.orientation = MapDirection.NORTH;
+//    }
+
+    public Animal(IWorldMap map) {
+        this(map, new Vector2D(0,0));
+    }
+
+    public Animal(IWorldMap map, Vector2D initialPosition) {
         this.orientation = MapDirection.NORTH;
-        this.location = new Vector2D(2, 2);
+        this.map = map;
+        this.location = initialPosition;
     }
 
     public MapDirection getOrientation() {
         return this.orientation;
     }
+
+    public Vector2D getLocation() {
+        return this.location;
+    }
     @Override
     public String toString() {
-        return "Animal{" +
-                "orientation= " + orientation.toString() +
-                ", location= " + location +
-                '}';
+        return switch (this.orientation) {
+            case NORTH -> "N";
+            case EAST -> "E";
+            case SOUTH -> "S";
+            case WEST -> "W";
+        };
     }
 
     public boolean isAt(Vector2D position) {
         return location.equals(position);
-    }
-
-
-    private boolean goOutOfMap(int x, int y) {
-        return this.location.x + x >= 0 && this.location.x + x < 5 && this.location.y + y >= 0 && this.location.y + y < 5;
     }
 
     public void move(MoveDirection direction) {
@@ -40,41 +52,41 @@ public class Animal {
         if (direction == MoveDirection.FORWARD) {
 
             if (this.orientation == MapDirection.NORTH) {
-                if (goOutOfMap(0, 1)) {
-                    this.location = this.location.add(new Vector2D(0, 1));
+                if (map.canMoveTo(this.location.add(MapDirection.NORTH.toUnitVector()))) {
+                    this.location = this.location.add(MapDirection.NORTH.toUnitVector());
                 }
             } else if (this.orientation == MapDirection.EAST) {
-                if (goOutOfMap(1, 0)) {
-                    this.location = this.location.add(new Vector2D(1, 0));
+                if (map.canMoveTo(this.location.add(MapDirection.EAST.toUnitVector()))) {
+                    this.location = this.location.add(MapDirection.EAST.toUnitVector());
 
                 }
             } else if (this.orientation == MapDirection.SOUTH) {
-                if (goOutOfMap(0, -1)) {
-                    this.location = this.location.add(new Vector2D(0, -1));
+                if (map.canMoveTo(this.location.add(MapDirection.SOUTH.toUnitVector()))) {
+                    this.location = this.location.add(MapDirection.SOUTH.toUnitVector());
 
                 }
             } else {
-                if (goOutOfMap(-1, 0)) {
-                    this.location = this.location.add(new Vector2D(-1, 0));
+                if (map.canMoveTo(this.location.add(MapDirection.WEST.toUnitVector()))) {
+                    this.location = this.location.add(MapDirection.WEST.toUnitVector());
                 }
             }
 
         } else if (direction == MoveDirection.BACKWARD) {
             if (this.orientation == MapDirection.NORTH) {
-                if (goOutOfMap(0, -1)) {
-                    this.location = this.location.add(new Vector2D(0, -1));
+                if (map.canMoveTo(this.location.add(MapDirection.SOUTH.toUnitVector()))) {
+                    this.location = this.location.add(MapDirection.SOUTH.toUnitVector());
                 }
             } else if (orientation == MapDirection.EAST) {
-                if (goOutOfMap(-1, 0)) {
-                    this.location = this.location.add(new Vector2D(-1, 0));
+                if (map.canMoveTo(this.location.add(MapDirection.WEST.toUnitVector()))) {
+                    this.location = this.location.add(MapDirection.WEST.toUnitVector());
                 }
             } else if (orientation == MapDirection.SOUTH) {
-                if (goOutOfMap(0, 1)) {
-                    this.location = this.location.add(new Vector2D(0, 1));
+                if (map.canMoveTo(this.location.add(MapDirection.NORTH.toUnitVector()))) {
+                    this.location = this.location.add(MapDirection.NORTH.toUnitVector());
                 }
             } else {
-                if (goOutOfMap(1, 0)) {
-                    this.location = this.location.add(new Vector2D(1, 0));
+                if (map.canMoveTo(this.location.add(MapDirection.EAST.toUnitVector()))) {
+                    this.location = this.location.add(MapDirection.EAST.toUnitVector());
                 }
             }
 

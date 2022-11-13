@@ -55,28 +55,11 @@ public class World {
 //        System.out.println(direction1.equals(direction2));
 
 
-        OptionsParser parser = new OptionsParser();
+        MoveDirection[] directions = new OptionsParser().parse(args);
+        IWorldMap map = new RectangularMap(10, 5);
+        Vector2D[] positions = { new Vector2D(2,2), new Vector2D(3,4), new Vector2D(2,2), new Vector2D(0,0) };
+        IEngine engine = new SimulationEngine(directions, map, positions);
+        engine.run();
 
-        Animal cat = new Animal();
-        cat.move(MoveDirection.RIGHT);
-        cat.move(MoveDirection.FORWARD);
-        cat.move(MoveDirection.FORWARD);
-
-        cat.move(MoveDirection.BACKWARD);
-        cat.move(MoveDirection.BACKWARD);
-        cat.move(MoveDirection.FORWARD);
-        cat.move(MoveDirection.FORWARD);
-        cat.move(MoveDirection.LEFT);
-        cat.move(MoveDirection.FORWARD);
-        cat.move(MoveDirection.BACKWARD);
-
-        System.out.println(cat.toString());
-
-        Animal dog = new Animal();
-
-        for (MoveDirection movement:parser.parse(args)) {
-            dog.move(movement);
-        }
-        System.out.println(dog);
     }
 }
