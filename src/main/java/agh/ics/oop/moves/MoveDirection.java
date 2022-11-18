@@ -1,4 +1,4 @@
-package agh.ics.oop;
+package agh.ics.oop.moves;
 
 public enum MoveDirection {
     FORWARD,

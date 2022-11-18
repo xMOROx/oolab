@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="agh.ics.oop.map.types.RectangularMapTest" tests="14" skipped="0" failures="0" errors="0" timestamp="2022-11-18T18:51:13" hostname="DESKTOP-KQGARON" time="0.755">
+  <properties/>
+  <testcase name="objectAtNull()" classname="agh.ics.oop.map.types.RectangularMapTest" time="0.014"/>
+  <testcase name="isOccupiedOutOfIndex()" classname="agh.ics.oop.map.types.RectangularMapTest" time="0.001"/>
+  <testcase name="objectAtOccupied()" classname="agh.ics.oop.map.types.RectangularMapTest" time="0.003"/>
+  <testcase name="isOccupiedTrue()" classname="agh.ics.oop.map.types.RectangularMapTest" time="0.001"/>
+  <testcase name="illegalMapSizeWidth()" classname="agh.ics.oop.map.types.RectangularMapTest" time="0.001"/>
+  <testcase name="legalMapSize()" classname="agh.ics.oop.map.types.RectangularMapTest" time="0.001"/>
+  <testcase name="objectAtOutOfIndex()" classname="agh.ics.oop.map.types.RectangularMapTest" time="0.001"/>
+  <testcase name="canMoveToOccupiedCell()" classname="agh.ics.oop.map.types.RectangularMapTest" time="0.61"/>
+  <testcase name="isOccupiedFalse()" classname="agh.ics.oop.map.types.RectangularMapTest" time="0.001"/>
+  <testcase name="runWithOneAnimal()" classname="agh.ics.oop.map.types.RectangularMapTest" time="0.062"/>
+  <testcase name="canMoveToCellOutOfTheRange()" classname="agh.ics.oop.map.types.RectangularMapTest" time="0.001"/>
+  <testcase name="illegalMapSizeHeight()" classname="agh.ics.oop.map.types.RectangularMapTest" time="0.0"/>
+  <testcase name="canMoveToEmptyCell()" classname="agh.ics.oop.map.types.RectangularMapTest" time="0.0"/>
+  <testcase name="runWithTwoAnimals()" classname="agh.ics.oop.map.types.RectangularMapTest" time="0.052"/>
+  <system-out><![CDATA[ y\x  0 1 2 3
+  4: ---------
+  3: | | |N| |
+  2: | | | | |
+  1: | | | | |
+  0: | | | | |
+ -1: ---------
+
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

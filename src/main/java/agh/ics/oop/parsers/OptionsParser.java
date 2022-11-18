@@ -1,10 +1,10 @@
-package agh.ics.oop;
+package agh.ics.oop.parsers;
 
-import java.util.Arrays;
+import agh.ics.oop.moves.MoveDirection;
 
 public class OptionsParser {
-    private final String[] stringDirection= new String[]{"f", "forward", "b", "backward", "l", "left", "r", "right"};
-    public MoveDirection[] parse(String[] args) {
+    private static final String[] stringDirection= new String[]{"f", "forward", "b", "backward", "l", "left", "r", "right"};
+    public static MoveDirection[] parse(String[] args) {
         int counter = 0;
         for (String arg: args) {
             arg = arg.toLowerCase();

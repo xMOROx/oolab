@@ -1,7 +1,13 @@
-package agh.ics.oop;
+package agh.ics.oop.animals;
 
 
-public class Animal {
+import agh.ics.oop.interfaces.IMapElement;
+import agh.ics.oop.moves.MoveDirection;
+import agh.ics.oop.Vector2D;
+import agh.ics.oop.interfaces.IWorldMap;
+import agh.ics.oop.map.MapDirection;
+
+public class Animal implements IMapElement {
     private MapDirection orientation;
     private Vector2D location;
 
@@ -12,7 +18,7 @@ public class Animal {
 //    }
 
     public Animal(IWorldMap map) {
-        this(map, new Vector2D(0,0));
+        this(map, new Vector2D(2,2));
     }
 
     public Animal(IWorldMap map, Vector2D initialPosition) {
@@ -25,7 +31,7 @@ public class Animal {
         return this.orientation;
     }
 
-    public Vector2D getLocation() {
+    public Vector2D getPosition() {
         return this.location;
     }
     @Override
