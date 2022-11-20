@@ -21,11 +21,10 @@ public class GrassField extends AbstractWorldMap implements IWorldMap {
         this.smallestCords = new Vector2D(0, 0);
         this.greatestCords = new Vector2D(0, 0);
 
-        addGrass();
         this.mapAnimator.addFrame(this);
     }
 
-    private void addGrass() {
+    public void addGrass() {
         var random = new Random();
         var bound = (int) Math.sqrt(10 * numberOfGrasses) + 1;
         Vector2D position;

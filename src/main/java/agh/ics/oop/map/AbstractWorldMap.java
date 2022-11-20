@@ -29,6 +29,9 @@ public abstract class AbstractWorldMap implements IWorldMap {
 
     public abstract void moveAnimal(Animal animal, MoveDirection direction);
 
+    public List<Animal> getAnimals() {
+        return this.animals;
+    }
     @Override
     public boolean place(Animal animal) {
         if (!canMoveTo(animal.getPosition()))
@@ -38,6 +41,7 @@ public abstract class AbstractWorldMap implements IWorldMap {
         mapAnimator.addFrame(this);
         return true;
     }
+
 
 
     @Override

@@ -3,12 +3,14 @@ package agh.ics.oop;
 import agh.ics.oop.animals.Animal;
 import agh.ics.oop.interfaces.IEngine;
 import agh.ics.oop.map.AbstractWorldMap;
+import agh.ics.oop.map.types.GrassField;
 import agh.ics.oop.moves.MoveDirection;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.*;
@@ -16,41 +18,43 @@ import javax.swing.*;
 public class SimulationEngine implements IEngine {
 
     private final MoveDirection[] directions;
-    private final Vector2D[] animalPositions;
-    private final int numberOfAnimals;
     private final AbstractWorldMap map;
+    private final List<Animal> animals;
     public  final int ANIMATION_DELAY = 1000;
 
     public SimulationEngine(MoveDirection [] directions, AbstractWorldMap map, Vector2D [] positions) {
         this.directions = directions;
         this.map = map;
-        ArrayList<Vector2D> positionsTemp = new ArrayList<>();
 
         for (Vector2D position: positions) {
-            Animal animal = new Animal(this.map, position);
-            if (this.map.place(animal)) {
-                positionsTemp.add(position);
-            }
+            new Animal(this.map, position);
         }
-        animalPositions = positionsTemp.toArray(new Vector2D[0]);
-        this.numberOfAnimals = positionsTemp.size();
+
+        this.animals = this.map.getAnimals();
+        if (this.map instanceof GrassField) {
+            ((GrassField) this.map).addGrass();
+        }
+
     }
 
     @Override
     public void run() {
 
-        int animalIndex = 0;
 
+        Iterator<Animal> iterator = this.animals.iterator();
+        if (!iterator.hasNext())
+            return;
 
-        for (MoveDirection move: directions) {
-            Vector2D position = animalPositions[animalIndex];
-            Animal animal = (Animal) map.objectAt(position);
+        for (var direction : directions) {
+            if (!iterator.hasNext())
+                iterator = animals.iterator();
 
-            map.moveAnimal(animal, move);
-            animalPositions[animalIndex] = animal.getPosition();
-            animalIndex = (animalIndex + 1) % this.numberOfAnimals;
-            map.getMapAnimator().addFrame(map);
+            Animal animal = iterator.next();
+            this.map.moveAnimal(animal, direction);
+            this.map.getMapAnimator().addFrame(this.map);
         }
+
+
         createAnimationWindow(map.getMapAnimator().getAnimation());
     }
 
