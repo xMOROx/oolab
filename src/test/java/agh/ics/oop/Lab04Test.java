@@ -1,8 +1,7 @@
 package agh.ics.oop;
 
-import agh.ics.oop.animals.Animal;
+import agh.ics.oop.objectsOnMap.Animal;
 import agh.ics.oop.interfaces.IEngine;
-import agh.ics.oop.interfaces.IWorldMap;
 import agh.ics.oop.map.AbstractWorldMap;
 import agh.ics.oop.map.types.RectangularMap;
 import agh.ics.oop.moves.MoveDirection;

@@ -2,14 +2,12 @@ package agh.ics.oop.map.types;
 
 import agh.ics.oop.SimulationEngine;
 import agh.ics.oop.Vector2D;
-import agh.ics.oop.animals.Animal;
+import agh.ics.oop.objectsOnMap.Animal;
 import agh.ics.oop.interfaces.IEngine;
 import agh.ics.oop.map.AbstractWorldMap;
 import agh.ics.oop.map.MapDirection;
 import agh.ics.oop.moves.MoveDirection;
 import org.junit.jupiter.api.Test;
-
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,13 +32,13 @@ class RectangularMapTest {
 
     @Test
     void canMoveToEmptyCell() {
-        var map = new RectangularMap(4, 4);
+        AbstractWorldMap map = new RectangularMap(4, 4);
         assertTrue(map.canMoveTo(new Vector2D(2, 2)));
     }
 
     @Test
     void canMoveToCellOutOfTheRange() {
-        var map = new RectangularMap(4, 4);
+        AbstractWorldMap map = new RectangularMap(4, 4);
         assertFalse(map.canMoveTo(new Vector2D(4, 6)));
     }
 

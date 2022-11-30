@@ -2,7 +2,7 @@ package agh.ics.oop.map.types;
 
 import agh.ics.oop.SimulationEngine;
 import agh.ics.oop.Vector2D;
-import agh.ics.oop.animals.Animal;
+import agh.ics.oop.objectsOnMap.Animal;
 import agh.ics.oop.interfaces.IEngine;
 import agh.ics.oop.map.AbstractWorldMap;
 import agh.ics.oop.map.MapDirection;
@@ -118,12 +118,12 @@ public class IntegrationTest {
     void randomText() {
         MoveDirection[] directions = OptionsParser.parse(new String[] { "alamakota" });
         AbstractWorldMap map = new GrassField(10);
-        var animal = new Animal(map);
+        Animal animal = new Animal(map);
 
 
 
-        var expectedDirection = MapDirection.NORTH;
-        var expectedPosition = new Vector2D(2, 2);
+        MapDirection expectedDirection = MapDirection.NORTH;
+        Vector2D expectedPosition = new Vector2D(2, 2);
 
         Vector2D[] positions = { expectedPosition };
         IEngine engine = new SimulationEngine(directions, map, positions);

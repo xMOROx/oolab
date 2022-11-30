@@ -1,6 +1,6 @@
 package agh.ics.oop;
 
-import agh.ics.oop.animals.Animal;
+import agh.ics.oop.objectsOnMap.Animal;
 import agh.ics.oop.interfaces.IWorldMap;
 import agh.ics.oop.map.MapDirection;
 import agh.ics.oop.map.types.RectangularMap;
@@ -65,7 +65,6 @@ class AnimalTest {
         test.move(MoveDirection.FORWARD);
         test.move(MoveDirection.FORWARD);
 
-//        Assertions.assertTrue(test.isAt(new Vector2D(2,4)));
 
         Animal test2 = new Animal(map, new Vector2D(2,2));
         test2.move(MoveDirection.BACKWARD);

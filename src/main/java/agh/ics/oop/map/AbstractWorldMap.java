@@ -3,24 +3,26 @@ package agh.ics.oop.map;
 
 import agh.ics.oop.Vector2D;
 import agh.ics.oop.interfaces.IMapElement;
+import agh.ics.oop.interfaces.IPositionChangeObserver;
 import agh.ics.oop.interfaces.IWorldMap;
-import agh.ics.oop.animals.Animal;
+import agh.ics.oop.objectsOnMap.Animal;
 import agh.ics.oop.moves.MoveDirection;
+import org.jetbrains.annotations.NotNull;
 
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-public abstract class AbstractWorldMap implements IWorldMap {
+public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
 
     protected MapAnimator mapAnimator;
     protected MapVisualizer mapVisualiser;
-    protected List<Animal> animals;
+    protected Map<Vector2D,IMapElement> mapElements;
     protected Vector2D smallestCords;
     protected Vector2D greatestCords;
 
     public AbstractWorldMap() {
-        this.animals = new LinkedList<>();
+        this.mapElements = new HashMap<>();
         this.mapVisualiser = new MapVisualizer(this);
         this.mapAnimator = new MapAnimator();
     }
@@ -29,19 +31,25 @@ public abstract class AbstractWorldMap implements IWorldMap {
 
     public abstract void moveAnimal(Animal animal, MoveDirection direction);
 
-    public List<Animal> getAnimals() {
-        return this.animals;
-    }
+//    public Map<Vector2D, Animal> getAnimals() {
+//        return this.mapElements;
+//    }
     @Override
-    public boolean place(Animal animal) {
-        if (!canMoveTo(animal.getPosition()))
+    public boolean place(@NotNull IMapElement element) {
+        if (!canMoveTo(element.getPosition()))
             return false;
 
-        addElementToMap(animal);
-        mapAnimator.addFrame(this);
+        addElementToMap(element);
         return true;
     }
 
+    @Override
+    public void positionChanged(Vector2D oldPosition, Vector2D newPosition) {
+        Animal animal = (Animal) this.mapElements.get(oldPosition);
+
+        this.mapElements.remove(oldPosition);
+        this.mapElements.put(newPosition, animal);
+    }
 
 
     @Override

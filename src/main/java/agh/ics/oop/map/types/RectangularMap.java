@@ -1,6 +1,6 @@
 package agh.ics.oop.map.types;
 
-import agh.ics.oop.animals.Animal;
+import agh.ics.oop.objectsOnMap.Animal;
 import agh.ics.oop.Vector2D;
 import agh.ics.oop.interfaces.IMapElement;
 import agh.ics.oop.interfaces.IWorldMap;
@@ -32,8 +32,11 @@ public class RectangularMap extends AbstractWorldMap implements IWorldMap {
     protected void addElementToMap(IMapElement element) {
         map.put(element.getPosition(), element);
 
-        if (element instanceof Animal animal)
-            animals.add(animal);
+        if (element instanceof Animal ) {
+            mapElements.put(element.getPosition(), (Animal) element);
+            ((Animal)element).addObserver(this);
+        }
+
     }
 
     @Override
@@ -45,12 +48,7 @@ public class RectangularMap extends AbstractWorldMap implements IWorldMap {
 
     @Override
     public Object objectAt(Vector2D position) {
-        for (var animal : animals) {
-            if (animal.getPosition().equals(position))
-                return animal;
-        }
-
-        return null;
+        return this.mapElements.get(position);
 
     }
 

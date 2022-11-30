@@ -2,15 +2,13 @@ package agh.ics.oop.map.types;
 
 import agh.ics.oop.SimulationEngine;
 import agh.ics.oop.Vector2D;
-import agh.ics.oop.animals.Animal;
-import agh.ics.oop.grass.Grass;
+import agh.ics.oop.objectsOnMap.Animal;
+import agh.ics.oop.objectsOnMap.Grass;
 import agh.ics.oop.interfaces.IEngine;
 import agh.ics.oop.map.AbstractWorldMap;
 import agh.ics.oop.map.MapDirection;
 import agh.ics.oop.moves.MoveDirection;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -47,8 +45,8 @@ class GrassFieldTest {
         IEngine engine = new SimulationEngine(directions, map, positions);
         engine.run();
 
-        var animalExpectedPosition = new Vector2D(2, 4);
-        var animalExpectedDirection = MapDirection.NORTH;
+        Vector2D animalExpectedPosition = new Vector2D(2, 4);
+        MapDirection animalExpectedDirection = MapDirection.NORTH;
 
         assertNotNull(map.objectAt(animalExpectedPosition));
         Animal animal = (Animal) map.objectAt(animalExpectedPosition);

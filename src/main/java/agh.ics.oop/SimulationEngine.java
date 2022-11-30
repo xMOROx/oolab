@@ -1,6 +1,6 @@
 package agh.ics.oop;
 
-import agh.ics.oop.animals.Animal;
+import agh.ics.oop.objectsOnMap.Animal;
 import agh.ics.oop.interfaces.IEngine;
 import agh.ics.oop.map.AbstractWorldMap;
 import agh.ics.oop.map.types.GrassField;
@@ -8,31 +8,34 @@ import agh.ics.oop.moves.MoveDirection;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Iterator;
+import java.util.*;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.*;
+import javax.swing.Timer;
 
 public class SimulationEngine implements IEngine {
 
     private final MoveDirection[] directions;
     private final AbstractWorldMap map;
-    private final List<Animal> animals;
-    public  final int ANIMATION_DELAY = 1000;
+    public  final int ANIMATION_DELAY = 500;
+
+    private final List<Animal> animalsOrder = new ArrayList<>();
 
     public SimulationEngine(MoveDirection [] directions, AbstractWorldMap map, Vector2D [] positions) {
         this.directions = directions;
         this.map = map;
 
         for (Vector2D position: positions) {
-            new Animal(this.map, position);
+            Animal newAnimal = new Animal(this.map, position);
+            if(this.map.place(newAnimal)) {
+                this.animalsOrder.add(newAnimal);
+            }
         }
 
-        this.animals = this.map.getAnimals();
+
         if (this.map instanceof GrassField) {
-            ((GrassField) this.map).addGrass();
+            ((GrassField) this.map).addGrasses();
         }
 
     }
@@ -40,20 +43,12 @@ public class SimulationEngine implements IEngine {
     @Override
     public void run() {
 
+        int n = this.animalsOrder.size();
 
-        Iterator<Animal> iterator = this.animals.iterator();
-        if (!iterator.hasNext())
-            return;
-
-        for (var direction : directions) {
-            if (!iterator.hasNext())
-                iterator = animals.iterator();
-
-            Animal animal = iterator.next();
-            this.map.moveAnimal(animal, direction);
+        for (int i = 0; i < directions.length; i++) {
+            this.map.moveAnimal( animalsOrder.get(i % n), directions[i]);
             this.map.getMapAnimator().addFrame(this.map);
         }
-
 
         createAnimationWindow(map.getMapAnimator().getAnimation());
     }
@@ -72,7 +67,7 @@ public class SimulationEngine implements IEngine {
         textArea.setText(animation.stream().max(Comparator.comparing(String::length)).orElse(""));
         panel.add(textArea);
 
-        var i = new AtomicInteger(1); // upraszcza strukture aby ominąć pętle
+        var i = new AtomicInteger(1);
         ActionListener taskPerformer = evt -> {
             textArea.setText(animation.get(i.get() % animation.size()));
             i.addAndGet(1);
