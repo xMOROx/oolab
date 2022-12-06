@@ -9,6 +9,9 @@ import agh.ics.oop.map.MapDirection;
 import agh.ics.oop.moves.MoveDirection;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class RectangularMapTest {
@@ -45,7 +48,7 @@ class RectangularMapTest {
     @Test
     void canMoveToOccupiedCell() {
         AbstractWorldMap map = new RectangularMap(4, 4);
-        MoveDirection[] directions = {MoveDirection.FORWARD};
+        List<MoveDirection> directions = new ArrayList<>(List.of(MoveDirection.FORWARD));
         Vector2D[] positions= {new Vector2D(2,2)};
         IEngine engine = new  SimulationEngine(directions, map, positions);
         engine.run();
@@ -57,13 +60,11 @@ class RectangularMapTest {
 
     @Test
     void runWithOneAnimal() {
-        MoveDirection[] directions = {
-                MoveDirection.FORWARD,
+        List<MoveDirection> directions = new ArrayList<>(List.of(MoveDirection.FORWARD,
                 MoveDirection.RIGHT,
                 MoveDirection.LEFT,
                 MoveDirection.FORWARD,
-                MoveDirection.FORWARD
-        };
+                MoveDirection.FORWARD));
 
         AbstractWorldMap map = new RectangularMap(4, 4);
 
@@ -87,8 +88,7 @@ class RectangularMapTest {
     void runWithTwoAnimals() {
 
 
-        MoveDirection[] directions = {
-                MoveDirection.FORWARD,
+        List<MoveDirection> directions = new ArrayList<>(List.of(MoveDirection.FORWARD,
                 MoveDirection.BACKWARD,
                 MoveDirection.RIGHT,
                 MoveDirection.LEFT,
@@ -100,8 +100,7 @@ class RectangularMapTest {
                 MoveDirection.FORWARD,
                 MoveDirection.FORWARD,
                 MoveDirection.FORWARD,
-                MoveDirection.FORWARD
-        };
+                MoveDirection.FORWARD));
 
         AbstractWorldMap map = new RectangularMap(4, 4);
 

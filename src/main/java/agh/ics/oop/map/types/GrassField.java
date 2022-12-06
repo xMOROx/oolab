@@ -13,19 +13,16 @@ import java.util.*;
 
 public class GrassField extends AbstractWorldMap implements IWorldMap {
     private final int numberOfGrasses;
-    private final int SEED = 123124;
+    private final int SEED = 2137;
 
     public GrassField(int numberOfGrasses) {
         this.numberOfGrasses = numberOfGrasses;
-
-        this.smallestCords = new Vector2D(0, 0);
-        this.greatestCords = new Vector2D(0, 0);
 
         this.mapAnimator.addFrame(this);
     }
 
     protected void addGrass() {
-        var random = new Random();
+        var random = new Random(SEED);
         var bound = (int) Math.sqrt(10 * numberOfGrasses) + 1;
         Vector2D position;
 
@@ -35,18 +32,10 @@ public class GrassField extends AbstractWorldMap implements IWorldMap {
         addElementToMap(new Grass(position));
     }
 
-    protected void changeCorners(Vector2D position) {
-
-        greatestCords = position.upperRight(greatestCords);
-        smallestCords = position.lowerLeft(smallestCords);
-
-    }
 
     @Override
     protected void addElementToMap(@NotNull IMapElement element) {
-        Vector2D position = element.getPosition();
-        changeCorners(position);
-
+        this.mapBoundary.addPosition(element.getPosition());
         this.mapElements.put(element.getPosition(), element);
 
         if(element instanceof Animal) {
@@ -67,6 +56,7 @@ public class GrassField extends AbstractWorldMap implements IWorldMap {
 
         this.mapElements.remove(oldPosition);
         this.mapElements.put(newPosition, animal);
+        this.mapBoundary.positionChanged(oldPosition, newPosition);
         if(removedGrass) {
             addGrass(); // replant grass
         }
@@ -75,7 +65,6 @@ public class GrassField extends AbstractWorldMap implements IWorldMap {
     @Override
     public void moveAnimal(Animal animal, MoveDirection direction) {
         animal.move(direction);
-        changeCorners(animal.getPosition());
     }
 
 
@@ -90,6 +79,11 @@ public class GrassField extends AbstractWorldMap implements IWorldMap {
         return this.mapElements.get(position);
     }
 
+
+    @Override
+    public Vector2D[] getMapBounds() {
+        return this.mapBoundary.getMapBounds();
+    }
 
     public void addGrasses() {
         for (int i = 0; i < numberOfGrasses; i++) {

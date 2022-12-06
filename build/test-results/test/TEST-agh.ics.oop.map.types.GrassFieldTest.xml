@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="agh.ics.oop.map.types.GrassFieldTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2022-11-30T12:50:44" hostname="DESKTOP-KQGARON" time="0.111">
+  <properties/>
+  <testcase name="isOccupiedTrue()" classname="agh.ics.oop.map.types.GrassFieldTest" time="0.006"/>
+  <testcase name="canMoveToOccupiedCell()" classname="agh.ics.oop.map.types.GrassFieldTest" time="0.003"/>
+  <testcase name="isOccupiedFalse()" classname="agh.ics.oop.map.types.GrassFieldTest" time="0.0"/>
+  <testcase name="runWithOneAnimal()" classname="agh.ics.oop.map.types.GrassFieldTest" time="0.051"/>
+  <testcase name="canMoveToEmptyCell()" classname="agh.ics.oop.map.types.GrassFieldTest" time="0.001"/>
+  <testcase name="objectAtEmptyOrGrass()" classname="agh.ics.oop.map.types.GrassFieldTest" time="0.001"/>
+  <testcase name="runWithTwoAnimals()" classname="agh.ics.oop.map.types.GrassFieldTest" time="0.045"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

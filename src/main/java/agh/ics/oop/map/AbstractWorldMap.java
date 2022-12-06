@@ -13,31 +13,32 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
+public abstract class AbstractWorldMap  implements IWorldMap, IPositionChangeObserver {
 
-    protected MapAnimator mapAnimator;
-    protected MapVisualizer mapVisualiser;
-    protected Map<Vector2D,IMapElement> mapElements;
-    protected Vector2D smallestCords;
-    protected Vector2D greatestCords;
+    protected final MapAnimator mapAnimator;
+    protected final MapVisualizer mapVisualiser;
+    protected final Map<Vector2D,IMapElement> mapElements;
+
+    protected final MapBoundary mapBoundary;
 
     public AbstractWorldMap() {
         this.mapElements = new HashMap<>();
         this.mapVisualiser = new MapVisualizer(this);
         this.mapAnimator = new MapAnimator();
+        this.mapBoundary = new MapBoundary();
+        this.mapBoundary.addPosition(new Vector2D(0, 0)); // zadeklarowane na potrzeby działania animatora
+
     }
 
     protected abstract void addElementToMap(IMapElement element);
 
     public abstract void moveAnimal(Animal animal, MoveDirection direction);
 
-//    public Map<Vector2D, Animal> getAnimals() {
-//        return this.mapElements;
-//    }
+
     @Override
-    public boolean place(@NotNull IMapElement element) {
+    public boolean place(@NotNull IMapElement element) throws IllegalArgumentException {
         if (!canMoveTo(element.getPosition()))
-            return false;
+             throw new IllegalArgumentException("Position " + element.getPosition() + " is not allowed to put animal!" );
 
         addElementToMap(element);
         return true;
@@ -46,8 +47,9 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
     @Override
     public void positionChanged(Vector2D oldPosition, Vector2D newPosition) {
         Animal animal = (Animal) this.mapElements.get(oldPosition);
-
         this.mapElements.remove(oldPosition);
+        this.mapBoundary.removePosition(oldPosition);
+        this.mapBoundary.addPosition(newPosition);
         this.mapElements.put(newPosition, animal);
     }
 
@@ -59,8 +61,10 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
 
     @Override
     public String toString() {
-        return mapVisualiser.draw(smallestCords, greatestCords);
+        return mapVisualiser.draw(this.mapBoundary.getMapBounds()[0], this.mapBoundary.getMapBounds()[1]);
     }
+
+    public abstract Vector2D[] getMapBounds();
 
     public MapAnimator getMapAnimator() {
         return mapAnimator;

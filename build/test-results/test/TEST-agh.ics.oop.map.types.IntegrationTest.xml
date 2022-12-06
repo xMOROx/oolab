@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="agh.ics.oop.map.types.IntegrationTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2022-11-30T12:50:44" hostname="DESKTOP-KQGARON" time="0.204">
+  <properties/>
+  <testcase name="emptyArrayWithTwoAnimals()" classname="agh.ics.oop.map.types.IntegrationTest" time="0.042"/>
+  <testcase name="arrayTestSequenceWithOneAnimal()" classname="agh.ics.oop.map.types.IntegrationTest" time="0.044"/>
+  <testcase name="emptyArrayWithOneAnimal()" classname="agh.ics.oop.map.types.IntegrationTest" time="0.045"/>
+  <testcase name="randomText()" classname="agh.ics.oop.map.types.IntegrationTest" time="0.001"/>
+  <testcase name="arrayTestSequenceWithTwoAnimals()" classname="agh.ics.oop.map.types.IntegrationTest" time="0.069"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

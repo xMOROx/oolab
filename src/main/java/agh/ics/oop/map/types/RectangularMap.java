@@ -6,6 +6,7 @@ import agh.ics.oop.interfaces.IMapElement;
 import agh.ics.oop.interfaces.IWorldMap;
 import agh.ics.oop.map.AbstractWorldMap;
 import agh.ics.oop.moves.MoveDirection;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
@@ -16,34 +17,40 @@ public class RectangularMap extends AbstractWorldMap implements IWorldMap {
         if (width < 0 || height < 0)
             throw new IllegalArgumentException("Szerokość i wysokość mapy nie może być ujemna");
 
-        smallestCords = new Vector2D(0, 0);
-        greatestCords = new Vector2D(width - 1, height - 1);
-
+        this.mapBoundary.addPosition(new Vector2D(width - 1, height - 1));
         map = new HashMap<>();
         mapAnimator.addFrame(this);
     }
 
     @Override
-    public boolean canMoveTo(Vector2D position) {
-        return position.follows(smallestCords) && position.precedes(greatestCords) && !isOccupied(position);
+    public boolean canMoveTo(@NotNull Vector2D position) {
+        return position.follows(this.mapBoundary.getMapBounds()[0]) && position.precedes(this.mapBoundary.getMapBounds()[1]) && !isOccupied(position);
+    }
+
+    @Override
+    public Vector2D[] getMapBounds() {
+        return this.mapBoundary.getMapBounds();
     }
 
     @Override
     protected void addElementToMap(IMapElement element) {
-        map.put(element.getPosition(), element);
 
-        if (element instanceof Animal ) {
-            mapElements.put(element.getPosition(), (Animal) element);
-            ((Animal)element).addObserver(this);
-        }
+        this.map.put(element.getPosition(), element);
+        this.mapBoundary.addPosition(element.getPosition());
+
+        this.mapElements.put(element.getPosition(), (Animal) element);
+
+        ((Animal)element).addObserver(this);
+
 
     }
 
     @Override
     public void moveAnimal(Animal animal, MoveDirection direction) {
-        map.remove(animal.getPosition());
+        this.map.remove(animal.getPosition());
         animal.move(direction);
-        map.put(animal.getPosition(), animal);
+
+        this.map.put(animal.getPosition(), animal);
     }
 
     @Override

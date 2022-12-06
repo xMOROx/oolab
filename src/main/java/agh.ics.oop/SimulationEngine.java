@@ -16,13 +16,13 @@ import javax.swing.Timer;
 
 public class SimulationEngine implements IEngine {
 
-    private final MoveDirection[] directions;
+    private final List<MoveDirection> directions;
     private final AbstractWorldMap map;
     public  final int ANIMATION_DELAY = 500;
 
     private final List<Animal> animalsOrder = new ArrayList<>();
 
-    public SimulationEngine(MoveDirection [] directions, AbstractWorldMap map, Vector2D [] positions) {
+    public SimulationEngine(List<MoveDirection>  directions, AbstractWorldMap map, Vector2D [] positions) {
         this.directions = directions;
         this.map = map;
 
@@ -44,13 +44,15 @@ public class SimulationEngine implements IEngine {
     public void run() {
 
         int n = this.animalsOrder.size();
+        System.out.println(this.map);
 
-        for (int i = 0; i < directions.length; i++) {
-            this.map.moveAnimal( animalsOrder.get(i % n), directions[i]);
-            this.map.getMapAnimator().addFrame(this.map);
+        for (int i = 0; i < directions.size(); i++) {
+            this.map.moveAnimal( animalsOrder.get(i % n), directions.get(i));
+            System.out.println(this.map);
+//            this.map.getMapAnimator().addFrame(this.map);
         }
 
-        createAnimationWindow(map.getMapAnimator().getAnimation());
+//        createAnimationWindow(map.getMapAnimator().getAnimation());
     }
 
     private  void createAnimationWindow(List<String> animation) {

@@ -10,6 +10,9 @@ import agh.ics.oop.map.MapDirection;
 import agh.ics.oop.moves.MoveDirection;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class GrassFieldTest {
@@ -22,7 +25,10 @@ class GrassFieldTest {
     @Test
     void canMoveToOccupiedCell() {
         AbstractWorldMap map = new GrassField(10);
-        MoveDirection[] directions = {MoveDirection.FORWARD};
+        List<MoveDirection> directions = new ArrayList<>();
+
+        directions.add(MoveDirection.FORWARD);
+
         Vector2D[] positions = {new Vector2D(2,2)};
         IEngine engine = new SimulationEngine(directions, map, positions);
         assertFalse(map.canMoveTo(new Vector2D(2, 2)));
@@ -31,13 +37,14 @@ class GrassFieldTest {
 
     @Test
     void runWithOneAnimal() {
-        MoveDirection[] directions = {
-                MoveDirection.FORWARD,
-                MoveDirection.RIGHT,
-                MoveDirection.LEFT,
-                MoveDirection.FORWARD,
-                MoveDirection.FORWARD
-        };
+       List<MoveDirection> directions = new ArrayList<>();
+
+       directions.add( MoveDirection.FORWARD);
+       directions.add( MoveDirection.RIGHT);
+       directions.add( MoveDirection.LEFT);
+       directions.add( MoveDirection.FORWARD);
+       directions.add( MoveDirection.FORWARD);
+
 
         AbstractWorldMap map = new GrassField(10);
 
@@ -56,21 +63,19 @@ class GrassFieldTest {
 
     @Test
     void runWithTwoAnimals() {
-        MoveDirection[] directions = {
-                MoveDirection.FORWARD,
-                MoveDirection.BACKWARD,
-                MoveDirection.RIGHT,
-                MoveDirection.LEFT,
-                MoveDirection.FORWARD,
-                MoveDirection.FORWARD,
-                MoveDirection.RIGHT,
-                MoveDirection.RIGHT,
-                MoveDirection.FORWARD,
-                MoveDirection.FORWARD,
-                MoveDirection.FORWARD,
-                MoveDirection.FORWARD,
-                MoveDirection.FORWARD
-        };
+       List<MoveDirection> directions = new ArrayList<>(List.of(MoveDirection.FORWARD,
+               MoveDirection.BACKWARD,
+               MoveDirection.RIGHT,
+               MoveDirection.LEFT,
+               MoveDirection.FORWARD,
+               MoveDirection.FORWARD,
+               MoveDirection.RIGHT,
+               MoveDirection.RIGHT,
+               MoveDirection.FORWARD,
+               MoveDirection.FORWARD,
+               MoveDirection.FORWARD,
+               MoveDirection.FORWARD,
+               MoveDirection.FORWARD));
 
         AbstractWorldMap map = new GrassField(10);
 
@@ -105,7 +110,8 @@ class GrassFieldTest {
     @Test
     void isOccupiedTrue() {
         AbstractWorldMap map = new GrassField(10);
-        MoveDirection[] directions = {MoveDirection.FORWARD};
+        List<MoveDirection> directions = new ArrayList<>();
+        directions.add(MoveDirection.FORWARD);
         Vector2D[] positions = { new Vector2D(2,2)};
         IEngine engine = new SimulationEngine(directions, map, positions);
         assertTrue(map.isOccupied(new Vector2D(2, 2)));

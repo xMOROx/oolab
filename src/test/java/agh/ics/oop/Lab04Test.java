@@ -9,13 +9,15 @@ import agh.ics.oop.parsers.OptionsParser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 public class Lab04Test {
     @Test
     void mapTest() {
         // Given
         String[] moves = {"f", "b", "r", "l", "f", "f", "r", "r", "f", "f", "f", "f","f", "f","f", "f"};
         AbstractWorldMap map = new RectangularMap(10, 5);
-        MoveDirection[] directions =  OptionsParser.parse(moves);
+        List<MoveDirection> directions =  OptionsParser.parse(moves);
         Vector2D[] positions = {new Vector2D(2,2), new Vector2D(3,4)};
         IEngine engine = new SimulationEngine(directions, map, positions);
 

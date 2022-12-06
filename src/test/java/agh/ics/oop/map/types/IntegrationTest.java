@@ -10,6 +10,8 @@ import agh.ics.oop.moves.MoveDirection;
 import agh.ics.oop.parsers.OptionsParser;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -17,7 +19,7 @@ public class IntegrationTest {
 
     @Test
     void emptyArrayWithOneAnimal() {
-        MoveDirection[] directions = OptionsParser.parse(new String[] { });
+        List<MoveDirection> directions = OptionsParser.parse(new String[] { });
         AbstractWorldMap map = new GrassField(10);
 
 
@@ -35,7 +37,7 @@ public class IntegrationTest {
 
     @Test
     void emptyArrayWithTwoAnimals() {
-        MoveDirection[] directions = OptionsParser.parse(new String[] { });
+        List<MoveDirection> directions = OptionsParser.parse(new String[] { });
         AbstractWorldMap map = new GrassField(10);
 
         Vector2D animal1ExpectedPosition = new Vector2D(2, 2);
@@ -62,7 +64,7 @@ public class IntegrationTest {
 
     @Test
     void arrayTestSequenceWithOneAnimal() {
-        MoveDirection[] directions = OptionsParser.parse(
+        List<MoveDirection> directions = OptionsParser.parse(
                 new String[] { "f", "b", "r", "l", "f", "f" }
         );
 
@@ -86,7 +88,7 @@ public class IntegrationTest {
 
     @Test
     void arrayTestSequenceWithTwoAnimals() {
-        MoveDirection[] directions = OptionsParser.parse(
+        List<MoveDirection> directions = OptionsParser.parse(
                 new String[] { "f", "b", "r", "l", "f", "f", "r", "r", "f", "f", "f", "f", "f", "f", "f", "f" }
         );
         AbstractWorldMap map = new GrassField(10);
@@ -115,21 +117,13 @@ public class IntegrationTest {
 
 
     @Test
-    void randomText() {
-        MoveDirection[] directions = OptionsParser.parse(new String[] { "alamakota" });
-        AbstractWorldMap map = new GrassField(10);
-        Animal animal = new Animal(map);
+    void randomText() throws IllegalArgumentException {
 
+        try {
+            List<MoveDirection> directions = OptionsParser.parse(new String[] { "alamakota" });
+        } catch(IllegalArgumentException e) {
+            assertEquals("alamakota is not legal move specification", e.getMessage());
+        }
 
-
-        MapDirection expectedDirection = MapDirection.NORTH;
-        Vector2D expectedPosition = new Vector2D(2, 2);
-
-        Vector2D[] positions = { expectedPosition };
-        IEngine engine = new SimulationEngine(directions, map, positions);
-        engine.run();
-
-        assertEquals(expectedDirection, animal.getOrientation());
-        assertEquals(expectedPosition, animal.getPosition());
     }
 }
