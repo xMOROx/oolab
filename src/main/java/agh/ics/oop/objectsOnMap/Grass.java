@@ -34,4 +34,14 @@ public  class Grass implements IMapElement {
     public String toString() {
         return "*";
     }
+
+    @Override
+    public String getResource() {
+        return "grass.png";
+    }
+
+    @Override
+    public String getObjectLabel() {
+        return "Trawa";
+    }
 }

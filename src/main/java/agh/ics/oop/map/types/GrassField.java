@@ -12,17 +12,21 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 
 public class GrassField extends AbstractWorldMap implements IWorldMap {
-    private final int numberOfGrasses;
-    private final int SEED = 2137;
+    private int numberOfGrasses;
+    private int seed = 1342;
 
     public GrassField(int numberOfGrasses) {
         this.numberOfGrasses = numberOfGrasses;
-
         this.mapAnimator.addFrame(this);
     }
 
+    public GrassField(int numberOfGrasses, int seed) {
+        this(numberOfGrasses);
+        this.seed = seed;
+    }
+
     protected void addGrass() {
-        var random = new Random(SEED);
+        var random = new Random(seed);
         var bound = (int) Math.sqrt(10 * numberOfGrasses) + 1;
         Vector2D position;
 
@@ -74,7 +78,7 @@ public class GrassField extends AbstractWorldMap implements IWorldMap {
     }
 
     @Override
-    public Object objectAt(Vector2D position) {
+    public IMapElement objectAt(Vector2D position) {
 
         return this.mapElements.get(position);
     }

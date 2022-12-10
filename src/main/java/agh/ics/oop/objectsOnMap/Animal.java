@@ -102,4 +102,19 @@ public class Animal implements IMapElement, IPositionChangeElement {
         }
         return this.location;
     }
+
+    @Override
+    public String getResource() {
+        return switch (this.orientation) {
+            case NORTH -> "up.png";
+            case EAST -> "right.png";
+            case SOUTH ->"down.png";
+            case WEST -> "left.png";
+        };
+    }
+
+    @Override
+    public String getObjectLabel() {
+        return this.toString() + ' ' + this.location.toString();
+    }
 }

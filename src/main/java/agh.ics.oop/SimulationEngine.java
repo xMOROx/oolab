@@ -1,10 +1,12 @@
 package agh.ics.oop;
 
+import agh.ics.oop.gui.App;
 import agh.ics.oop.objectsOnMap.Animal;
 import agh.ics.oop.interfaces.IEngine;
 import agh.ics.oop.map.AbstractWorldMap;
 import agh.ics.oop.map.types.GrassField;
 import agh.ics.oop.moves.MoveDirection;
+import javafx.application.Platform;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -16,14 +18,16 @@ import javax.swing.Timer;
 
 public class SimulationEngine implements IEngine {
 
-    private final List<MoveDirection> directions;
+    private List<MoveDirection> directions;
     private final AbstractWorldMap map;
-    public  final int ANIMATION_DELAY = 500;
+    public  int animationDelay = 500;
 
     private final List<Animal> animalsOrder = new ArrayList<>();
 
-    public SimulationEngine(List<MoveDirection>  directions, AbstractWorldMap map, Vector2D [] positions) {
-        this.directions = directions;
+    private final List<App> observers = new ArrayList<>();
+
+    public SimulationEngine(AbstractWorldMap map, Vector2D [] positions) {
+
         this.map = map;
 
         for (Vector2D position: positions) {
@@ -40,16 +44,52 @@ public class SimulationEngine implements IEngine {
 
     }
 
+    public SimulationEngine(List<MoveDirection>  directions, AbstractWorldMap map, Vector2D [] positions) {
+        this(map, positions);
+        this.directions = directions;
+    }
+
+    public SimulationEngine(List<MoveDirection>  directions, AbstractWorldMap map, Vector2D [] positions, App observer) {
+        this(directions, map, positions);
+        this.observers.add(observer);
+    }
+
+    public SimulationEngine(List<MoveDirection>  directions, AbstractWorldMap map, Vector2D [] positions, App observer, int delay) {
+        this(directions, map, positions, observer);
+        this.animationDelay = delay;
+    }
+
+
+    private void dispatchAnimation() {
+        for (App app : observers) {
+            Platform.runLater(app::renderMap);
+        }
+    }
+
+
     @Override
     public void run() {
 
         int n = this.animalsOrder.size();
-        System.out.println(this.map);
-
-        for (int i = 0; i < directions.size(); i++) {
-            this.map.moveAnimal( animalsOrder.get(i % n), directions.get(i));
+        if(observers.size() == 0) {
             System.out.println(this.map);
+
+            for (int i = 0; i < directions.size(); i++) {
+                this.map.moveAnimal( animalsOrder.get(i % n), directions.get(i));
+//                System.out.println(this.map);
 //            this.map.getMapAnimator().addFrame(this.map);
+            }
+            return;
+        }
+        try {
+            dispatchAnimation();
+            for (int i = 0; i < this.directions.size(); i++) {
+                animalsOrder.get(i % n).move(this.directions.get(i));
+                dispatchAnimation();
+                Thread.sleep(this.animationDelay);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
 //        createAnimationWindow(map.getMapAnimator().getAnimation());
@@ -74,7 +114,7 @@ public class SimulationEngine implements IEngine {
             textArea.setText(animation.get(i.get() % animation.size()));
             i.addAndGet(1);
         };
-        new Timer(ANIMATION_DELAY, taskPerformer).start();
+        new Timer(animationDelay, taskPerformer).start();
 
         frame.pack();
         textArea.setText("");
@@ -82,5 +122,7 @@ public class SimulationEngine implements IEngine {
         frame.setVisible(true);
     }
 
-
+    public void setDirectionArray(List<MoveDirection> directionArray) {
+        this.directions = directionArray;
+    }
 }

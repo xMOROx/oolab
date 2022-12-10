@@ -3,7 +3,6 @@ package agh.ics.oop.parsers;
 import agh.ics.oop.moves.MoveDirection;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class OptionsParser {

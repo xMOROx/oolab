@@ -12,5 +12,5 @@ public interface IWorldMap {
 
     boolean isOccupied(Vector2D position);
 
-    Object objectAt(Vector2D position);
+    IMapElement objectAt(Vector2D position);
 }

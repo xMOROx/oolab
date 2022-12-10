@@ -54,7 +54,7 @@ public class RectangularMap extends AbstractWorldMap implements IWorldMap {
     }
 
     @Override
-    public Object objectAt(Vector2D position) {
+    public IMapElement objectAt(Vector2D position) {
         return this.mapElements.get(position);
 
     }
